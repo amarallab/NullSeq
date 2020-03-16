@@ -30,10 +30,17 @@ def main(outfile, number=None, TT=None, AAfile=None,
             length = l
             AASequence = None
             operatingmode = 'AA Usage Frequency'
+            #B, O, U, X and Z are often used for ambiguous amino acid calls.
+            # This warns the user when these are included in AAfile as they are not accepted later.
+            bad_AA = ('B', 'O', 'U', 'X', 'Z')
+            for AA in bad_letters:
+              if AA in AAUsage.keys():
+                print(AA,' is an invalid Amino Acid code for this program, please remove.')
+                raise ValueError('Invalid Amino Acid code in AA Usage Probabilities')
         else:
             AASequence = NS.parse_fastafile(AAfile)
             AAUsage = NS.get_AA_Freq(AASequence, N, nucleotide=False)
-            operatingmode = 'Exisitng Sequence - AA'
+            operatingmode = 'Existing Sequence - AA'
             if l == None:
                 length = len(AASequence)-1
             else:
