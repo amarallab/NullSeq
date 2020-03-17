@@ -33,7 +33,7 @@ def main(outfile, number=None, TT=None, AAfile=None,
             #B, O, U, X and Z are often used for ambiguous amino acid calls.
             # This warns the user when these are included in AAfile as they are not accepted later.
             bad_AA = ('B', 'O', 'U', 'X', 'Z')
-            for AA in bad_letters:
+            for AA in bad_AA:
               if AA in AAUsage.keys():
                 print(AA,' is an invalid Amino Acid code for this program, please remove.')
                 raise ValueError('Invalid Amino Acid code in AA Usage Probabilities')
