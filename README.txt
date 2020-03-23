@@ -4,6 +4,7 @@
 #                           #
 #############################
 
+This is version 1 of NullSeq, we are currently working on a few updates here as well as in a separate version 2.0 repository that is located at: https://github.com/amarallab/NullSeq2.0
 
 Parameters to run nullseq:
 
@@ -84,4 +85,5 @@ Example:
 
 Please Cite:
 Liu SS, Hockenberry AJ, Lancichinetti A, Jewett MC, Amaral LAN (2016) NullSeq: A Tool for Generating Random Coding Sequences with Desired Amino Acid and GC Contents. PLoS Comput Biol 12(11): e1005184. doi:10.1371/journal.pcbi.1005184
+
 
