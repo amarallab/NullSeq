@@ -4,7 +4,7 @@
 #                           #
 #############################
 
-This is version 1 of NullSeq, we are currently working on a few updates here as well as in a separate version 2.0 repository that is located at: https://github.com/amarallab/NullSeq2.0
+This is the development version of NullSeq, please note that we are currently working on a few updates here as well as in a separate version 2.0 repository that is located at: https://github.com/amarallab/NullSeq2.0 If you're looking for the most stable version, I recommend checking out the "releases" section where you'll find the code that was used in our published manuscript.
 
 Parameters to run nullseq:
 

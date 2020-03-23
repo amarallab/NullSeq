@@ -97,7 +97,7 @@ def get_Equal_AA_Prob(n):
     EqualAAdf['f'] = freqlist
     return EqualAAdf
 
-def df_to_dict(df):
+def df_to_dict(df, n):
     ''' Translates pandas dataframe to dictionary
 
     Parameters:
@@ -110,12 +110,15 @@ def df_to_dict(df):
         Values : float
             P(AA)
     '''
-
-    AAUsage = {}
+    
+    AAUsageDict = {}
     valuelist = df.values
     for item in valuelist:
-        AAUsage[item[0]] = item[1]
-    return AAUsage
+        AAUsageDict[item[0]] = item[1]
+    
+    AAUsageDict = clean_AA_dict(AAUsageDict, n)
+
+    return AAUsageDict
 
 def cdf(weights):
     ''' Translates weights to cdf
@@ -270,14 +273,36 @@ def get_AA_Freq(seq, n, nucleotide=True):
     '''
 
     AAUsageDict = get_AA_Count(seq, n, Nuc=nucleotide)
-
     for AA in AAUsageDict.keys():
         if nucleotide:
             AAUsageDict[AA] = AAUsageDict[AA]/((len(seq)-6)/3)
         else:
             AAUsageDict[AA] = AAUsageDict[AA]/(len(seq)-1)
 
+    AAUsageDict = clean_AA_dict(AAUsageDict, n)
     return AAUsageDict
+
+
+
+def clean_AA_dict(AAUsageDict, n):
+    '''
+    Recently added function to add in amino acids with zero frequency and ensure only usage of the 
+    standard alphabet.
+
+    --AJH
+    '''
+    CforAA = Codons_for_AA(n) 
+    for aa in CforAA.keys():
+        if aa not in AAUsageDict.keys():
+            AAUsageDict[aa] = 0.0
+    
+    assert np.isclose(1.0, np.sum(list(AAUsageDict.values()))), 'The amino acid frequencies from your file do not sum to 1. Exiting'
+    
+    assert set(list(CforAA.keys())) == set(list(AAUsageDict.keys())), 'Problematic amino acid usage frequency dictionary, '\
+            'I found {} amino acids instead of the {} included in the indicated translation table (which, for the record is {})'.format(len(AAUsageDict.keys()), len(CforAA.keys()), n)
+    
+    return AAUsageDict
+
 
 def get_ATCG_Count(seq):
     '''Determines the number of each nucleotide in the sequence
@@ -501,7 +526,7 @@ def get_beta(given, length, CforAA, setAAProb, n):
             list of codons that can be used to code for the AA
 
     setAAProb : dictionary
-        the specified AA usage probabilitu
+        the specified AA usage probability
         key : str
             AAprob
         Values : float
@@ -599,7 +624,7 @@ def compute_average_GC(b, length, CforAA, setAAProb, n, given='beta'):
             list of codons that can be used to code for the AA
 
     setAAProb : dictionary
-        the specified AA usage probabilitu
+        the specified AA usage probability
         key : str
             AAprob
         Values : float

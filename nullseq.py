@@ -26,14 +26,14 @@ def main(outfile, number=None, TT=None, AAfile=None,
     if AAfile is not None:
         GC = gc
         if AAfile.split('.')[-1] == 'csv':
-            AAUsage = NS.df_to_dict(NS.AAUsage_from_csv(AAfile))
+            AAUsage = NS.df_to_dict(NS.AAUsage_from_csv(AAfile), N)
             length = l
             AASequence = None
             operatingmode = 'AA Usage Frequency'
         else:
             AASequence = NS.parse_fastafile(AAfile)
             AAUsage = NS.get_AA_Freq(AASequence, N, nucleotide=False)
-            operatingmode = 'Exisitng Sequence - AA'
+            operatingmode = 'Existing Sequence - AA'
             if l == None:
                 length = len(AASequence)-1
             else:
@@ -47,7 +47,7 @@ def main(outfile, number=None, TT=None, AAfile=None,
         NucleotideSeq = NS.parse_fastafile(seqfile)
         AASequence = str(Seq(NucleotideSeq).translate(table=N)[0:-1])
         AAUsage = NS.get_AA_Freq(AASequence, N, nucleotide=False)
-        operatingmode = 'Exisitng Sequence - Nucleotide'
+        operatingmode = 'Existing Sequence - Nucleotide'
         if gc is None:
             gc = NS.get_GC_Freq(NucleotideSeq)*100
         else:
