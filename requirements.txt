@@ -1,5 +1,5 @@
 biopython==1.66
-numpy==1.11.0
+numpy==1.22.0
 pandas==0.18.1
 python-dateutil==2.5.3
 pytz==2016.4
